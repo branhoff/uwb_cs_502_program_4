@@ -30,8 +30,7 @@
 #include "Customer.h"
 #include "Transaction.h"
 
-class Inventory
-{
+class Inventory {
 private:
    vector<Item*> coins;
    vector<Item*> comics;

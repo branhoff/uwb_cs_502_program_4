@@ -22,8 +22,7 @@
  * @pre The customer and item pointers must be valid and not nullptr.
  * @post A new Transaction object is created with the given customer, item, and type.
  */
-Transaction::Transaction(Customer* customer, Item* item, string type)
-{
+Transaction::Transaction(Customer* customer, Item* item, string type) {
    this->customer = customer;
    this->item = item;
    this->type = type;

@@ -21,8 +21,7 @@
 
 using namespace std;
 
-class Customer
-{
+class Customer {
 private:
    string id;
    string firstName;

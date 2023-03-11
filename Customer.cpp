@@ -30,19 +30,16 @@
  *
  * @return None.
  */
-Customer::Customer(string id, string fname, string lname)
-{
+Customer::Customer(string id, string fname, string lname) {
    this->id = id;
    this->firstName = fname;
    this->lastName = lname;
 }
 
-string Customer::getId()
-{
+string Customer::getId() {
    return this->id;
 }
 
-string Customer::getFullName()
-{
+string Customer::getFullName() {
    return this->firstName + " " + this->lastName;
 }

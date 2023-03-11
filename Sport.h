@@ -18,8 +18,7 @@
 
 #include "Item.h"
 
-class Sport : public Item
-{
+class Sport : public Item {
 public:
    /**
     * @brief Constructor for Sport class to initialize the data members.

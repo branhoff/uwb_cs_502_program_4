@@ -25,8 +25,7 @@
  * @pre The customer and item pointers must be valid and not nullptr.
  * @post A new Transaction object is created with the given customer, item, and type.
  */
-class Transaction
-{
+class Transaction {
 
 public:
    Transaction(Customer* customer, Item* item, string type);

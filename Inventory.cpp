@@ -97,30 +97,25 @@ Inventory::Inventory()
  */
 Inventory::~Inventory()
 {
-   for (auto it = coins.begin(); it != coins.end(); ++it)
-   {
+   for (auto it = coins.begin(); it != coins.end(); ++it) {
       delete (*it);
    }
 
-   for (auto it = comics.begin(); it != comics.end(); ++it)
-   {
+   for (auto it = comics.begin(); it != comics.end(); ++it) {
       delete (*it);
    }
 
 
-   for (auto it = sports.begin(); it != sports.end(); ++it)
-   {
+   for (auto it = sports.begin(); it != sports.end(); ++it) {
       delete (*it);
    }
 
-   for (auto it = customers.begin(); it != customers.end(); ++it)
-   {
+   for (auto it = customers.begin(); it != customers.end(); ++it) {
       Customer* customer = it->second;
       delete customer;
    }
 
-   for (auto it = transactions.begin(); it != transactions.end(); ++it)
-   {
+   for (auto it = transactions.begin(); it != transactions.end(); ++it) {
       delete (*it);
    }
 }
@@ -138,8 +133,7 @@ int Inventory::readInventory(string path)
 {
    ifstream input(path);
 
-   if (!input.is_open())
-   {
+   if (!input.is_open()) {
       cout << path << " does not exist" << endl;
       return -1;
    }
@@ -148,8 +142,7 @@ int Inventory::readInventory(string path)
    string coinType, title, publisher, player, manufacturer;
    int count = 0, year = 0;
 
-   while (!input.eof())
-   {
+   while (!input.eof()) {
       std::getline(input, type, ','); 		//get type of inventory
       input.get(); 			//discard space 
       std::getline(input, stringCount, ','); 	//get count
@@ -158,8 +151,7 @@ int Inventory::readInventory(string path)
 
       Item* item = nullptr;
 
-      if (type == "M") // coin
-      {
+      if (type == "M") { // coin
          std::getline(input, stringYear, ','); 		//get year of inventory
          year = atoi(stringYear.c_str());
          input.get(); 			//discard space 
@@ -173,8 +165,7 @@ int Inventory::readInventory(string path)
 
          coins.push_back(item);
       }
-      else if (type == "C") // Comic
-      {
+      else if (type == "C") { // Comic
          std::getline(input, stringYear, ','); 		//get year of inventory
          year = atoi(stringYear.c_str());
          input.get(); 			//discard space 
@@ -191,8 +182,7 @@ int Inventory::readInventory(string path)
 
          comics.push_back(item);
       }
-      else if (type == "S") // Sport Card
-      {
+      else if (type == "S") { // Sport Card
          std::getline(input, stringYear, ','); 		//get year of inventory
          year = atoi(stringYear.c_str());
          input.get(); 			//discard space 
@@ -209,13 +199,11 @@ int Inventory::readInventory(string path)
 
          sports.push_back(item);
       }
-      else
-      {
+      else {
          getline(input, description, '\n'); 	//get rest of info
       }
 
    }
-
    return 0;
 }
 
@@ -236,16 +224,14 @@ int Inventory::readCustomer(string path)
 {
    ifstream input(path);
 
-   if (!input.is_open())
-   {
+   if (!input.is_open()) {
       cout << path << " does not exist" << endl;
       return -1;
    }
 
    string id, firstName, lastName;
 
-   while (!input.eof())
-   {
+   while (!input.eof()) {
       std::getline(input, id, ','); 		//get id
       input.get(); 			//discard space 
       input >> firstName; 	// get firstName    
@@ -271,12 +257,10 @@ int Inventory::readCustomer(string path)
  * @post Items are added or removed from the Inventory's items.
  * @post Customers may be added to the Inventory's customers if they are referenced in the file.
  */
-int Inventory::parseCommands(string path)
-{
+int Inventory::parseCommands(string path) {
    ifstream input(path);
 
-   if (!input.is_open())
-   {
+   if (!input.is_open()) {
       cout << path << " does not exist" << endl;
       return -1;
    }
@@ -288,41 +272,34 @@ int Inventory::parseCommands(string path)
    string coinType, title, publisher, player, manufacturer;
    int count = 0, year = 0;
 
-   while (!input.eof())
-   {
+   while (!input.eof()) {
       // get transaction type
       input >> transactionType;
-      if (transactionType == 'S' || transactionType == 'B' || transactionType == 'C') // sell/buy/customer
-      {
+      if (transactionType == 'S' || transactionType == 'B' || transactionType == 'C') { // sell/buy/customer
          input.get(); 			//discard space 
          input.get(); 			//discard space 
          // read customer id
 
-         if (transactionType == 'C') // customer
-         {
+         if (transactionType == 'C') { // customer
             input >> customerID;
          }
-         else
-         {
+         else {
             std::getline(input, customerID, ',');
          }
 
          // check if customer id exist
          Customer* customer = findCustomer(customerID);
-         if (customer == nullptr)
-         {
+         if (customer == nullptr) {
             std::getline(input, description, '\n'); 		//get rest
             cout << "Customer: " << customerID << " not exist" << endl;
             continue;
          }
 
-         if (transactionType == 'C') // customer
-         {
+         if (transactionType == 'C') { // customer
             displayForCustomer(customerID);
          }
 
-         if (transactionType == 'S' || transactionType == 'B') // sell/buy
-         {
+         if (transactionType == 'S' || transactionType == 'B') { // sell/buy
             input.get(); 			//discard space 
 
             std::getline(input, type, ','); 		//get type of inventory
@@ -330,8 +307,7 @@ int Inventory::parseCommands(string path)
 
             Item* item = nullptr;
 
-            if (type == "M") // coin
-            {
+            if (type == "M") { // coin
                std::getline(input, stringYear, ','); 		//get year of inventory
                year = atoi(stringYear.c_str());
                input.get(); 			//discard space 
@@ -342,8 +318,7 @@ int Inventory::parseCommands(string path)
                std::getline(input, coinType, '\n'); 		//get rest of inventory      
                item = new Coin(year, grade, coinType);
             }
-            else if (type == "C") // Comic
-            {
+            else if (type == "C") { // Comic
                std::getline(input, stringYear, ','); 		//get year of inventory
                year = atoi(stringYear.c_str());
                input.get(); 			//discard space 
@@ -357,8 +332,7 @@ int Inventory::parseCommands(string path)
                std::getline(input, publisher, '\n'); 		//get rest of inventory  
                item = new Comic(year, grade, title, publisher);
             }
-            else if (type == "S") // Sport Card
-            {
+            else if (type == "S") { // Sport Card
                std::getline(input, stringYear, ','); 		//get year of inventory
                year = atoi(stringYear.c_str());
                input.get(); 			//discard space 
@@ -372,48 +346,38 @@ int Inventory::parseCommands(string path)
                std::getline(input, manufacturer, '\n'); 		//get rest of inventory   
                item = new Sport(year, grade, player, manufacturer);
             }
-            else
-            {
+            else {
                getline(input, description, '\n'); 	//get rest of info
             }
 
-            if (item != nullptr)
-            {
+            if (item != nullptr) {
                Item* exist = findItem(item);
 
-               if (exist == nullptr)
-               {
-                  if (transactionType == 'S') // sell
-                  {
+               if (exist == nullptr) {
+                  if (transactionType == 'S') { // sell
                      cout << "there is no inventory for item " << item->getInfo() << endl;
                      delete item;
                   }
                   item->setCount(1);
                   vector<Item*>* items = findItems(item->getType());
-                  if (items != nullptr)
-                  {
+                  if (items != nullptr) {
                      items->push_back(item);
                      Transaction* trans = new Transaction(customer, item, "Buy");
                      transactions.push_back(trans);
                   }
                }
-               else
-               {
-                  if (transactionType == 'S')
-                  {
-                     if (exist->getCount() < 1)
-                     {
+               else {
+                  if (transactionType == 'S') {
+                     if (exist->getCount() < 1) {
                         cout << "there is no inventory for item " << item->getInfo() << endl;
                      }
-                     else
-                     {
+                     else {
                         exist->decreaseCount();
                         Transaction* trans = new Transaction(customer, exist, "Sell");
                         transactions.push_back(trans);
                      }
                   }
-                  else // Buy
-                  {
+                  else { // Buy
                      exist->increaseCount();
 
                      Transaction* trans = new Transaction(customer, exist, "Buy");
@@ -422,27 +386,21 @@ int Inventory::parseCommands(string path)
                   delete item;
                }
             }
-            else
-            {
+            else {
                cout << "Invalid Item Type: " << type << endl;
             }
          }
       }
-      else if (transactionType == 'D')
-      {
+      else if (transactionType == 'D') {
          displayInventory();
       }
-      else if (transactionType == 'H')
-      {
+      else if (transactionType == 'H') {
          displayHistory();
       }
-      else
-      {
+      else {
          std::getline(input, description, '\n'); 		//get rest
       }
-
       transactionType = ' ';
-
    }
    return 0;
 }
@@ -462,8 +420,7 @@ int Inventory::parseCommands(string path)
  * - If a customer object with the given ID is not found in the inventory, nullptr is returned.
  * - The state of the inventory is not modified by this method.
  */
-Customer* Inventory::findCustomer(string id)
-{
+Customer* Inventory::findCustomer(string id) {
    auto it = customers.find(id);
    if (it == customers.end())
       return nullptr;
@@ -484,18 +441,15 @@ vector<Item*>* Inventory::findItems(char type)
 {
    vector<Item*>* items = nullptr;
 
-   if (type == 'M') // coin
-   {
+   if (type == 'M') { // coin
       items = &coins;
    }
 
-   if (type == 'C') // comics
-   {
+   if (type == 'C') { // comics
       items = &coins;
    }
 
-   if (type == 'S') // sports
-   {
+   if (type == 'S') { // sports
       items = &sports;
    }
 
@@ -515,8 +469,7 @@ vector<Item*>* Inventory::findItems(char type)
  * It then iterates through the vector to find an item that matches the given item's attributes using the compare method.
  * If found, a pointer to the matching item is returned. If not found, nullptr is returned.
  */
-Item* Inventory::findItem(Item* item)
-{
+Item* Inventory::findItem(Item* item) {
    if (item == nullptr)
       return nullptr;
 
@@ -524,13 +477,11 @@ Item* Inventory::findItem(Item* item)
    if (items == nullptr)
       return nullptr;
 
-   for (auto it = items->begin(); it != items->end(); ++it)
-   {
+   for (auto it = items->begin(); it != items->end(); ++it) {
       Item* row = *it;
       if (row->compare(item) == 0)
          return row;
    }
-
    return nullptr;
 }
 
@@ -547,12 +498,10 @@ Item* Inventory::findItem(Item* item)
  *       If there are no transactions for the specified customer, a message is printed
  *       indicating that there are no transactions.
  */
-void Inventory::displayForCustomer(string id)
-{
+void Inventory::displayForCustomer(string id) {
    cout << endl << "-------- Transaction of Customer " << id << " ---------- - " << endl;
    vector<Transaction*> transForCustomer;
-   for (auto it = transactions.begin(); it != transactions.end(); ++it)
-   {
+   for (auto it = transactions.begin(); it != transactions.end(); ++it) {
       Transaction* trans = *it;
       if (trans->customer->getId() != id)
          continue;
@@ -563,19 +512,15 @@ void Inventory::displayForCustomer(string id)
    std::sort(transForCustomer.begin(), transForCustomer.end(), compareTransaction);
 
    // display transactions
-   for (auto it = transForCustomer.begin(); it != transForCustomer.end(); ++it)
-   {
+   for (auto it = transForCustomer.begin(); it != transForCustomer.end(); ++it) {
       Transaction* trans = *it;
       cout << "Customer " << trans->customer->getFullName() << " " << trans->type << ": " << trans->item->getInfo() << endl;
    }
 
-   if (transForCustomer.size() < 1)
-   {
+   if (transForCustomer.size() < 1) {
       cout << "There is no transaction for customer " << id << endl;
    }
-
    cout << endl;
-
 }
 
 
@@ -585,14 +530,12 @@ void Inventory::displayForCustomer(string id)
  * @pre The Inventory object must be initialized with valid data and items.
  * @post The current inventory of items is displayed in the console.
  */
-void Inventory::displayInventory()
-{
+void Inventory::displayInventory() {
    cout << endl << "-------- Inventory -----------" << endl;
 
    cout << endl << "----- Coin List -----" << endl;
    std::sort(coins.begin(), coins.end(), compareItem);
-   for (auto it = coins.begin(); it != coins.end(); ++it)
-   {
+   for (auto it = coins.begin(); it != coins.end(); ++it) {
       Item* item = *it;
 
       int count = item->getCount();
@@ -604,8 +547,7 @@ void Inventory::displayInventory()
 
    cout << endl << "----- Comics List -----" << endl;
    std::sort(comics.begin(), comics.end(), compareItem);
-   for (auto it = comics.begin(); it != comics.end(); ++it)
-   {
+   for (auto it = comics.begin(); it != comics.end(); ++it) {
       Item* item = *it;
 
       int count = item->getCount();
@@ -618,8 +560,7 @@ void Inventory::displayInventory()
 
    cout << endl << "----- Sports List -----" << endl;
    std::sort(sports.begin(), sports.end(), compareItem);
-   for (auto it = sports.begin(); it != sports.end(); ++it)
-   {
+   for (auto it = sports.begin(); it != sports.end(); ++it) {
       Item* item = *it;
 
       int count = item->getCount();
@@ -639,22 +580,19 @@ void Inventory::displayInventory()
  * @post The transaction history of all customers in the inventory is printed to the console.
  *       Transactions are sorted by customer name and then by transaction date.
  */
-void Inventory::displayHistory()
-{
+void Inventory::displayHistory() {
    cout << endl << "-------- History -----------" << endl;
 
    // sort customer first
    vector<Customer*> sorted;
-   for (auto it = customers.begin(); it != customers.end(); ++it)
-   {
+   for (auto it = customers.begin(); it != customers.end(); ++it) {
       Customer* customer = it->second;
       sorted.push_back(customer);
    }
 
    std::sort(sorted.begin(), sorted.end(), compareCustomer);
 
-   for (auto it = sorted.begin(); it != sorted.end(); ++it)
-   {
+   for (auto it = sorted.begin(); it != sorted.end(); ++it) {
       Customer* customer = *it;
       displayForCustomer(customer->getId());
    }

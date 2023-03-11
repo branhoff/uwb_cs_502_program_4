@@ -82,32 +82,26 @@ int Item::compare(Item* other) {
  *
  * @param count The new count value for this item.
  */
-void Item::setCount(int count)
-{
+void Item::setCount(int count) {
    this->count = count;
 }
 
-char Item::getType()
-{
+char Item::getType() {
    return this->type;
 }
 
-int Item::getYear()
-{
+int Item::getYear() {
    return this->year;
 }
 
-int Item::getCount()
-{
+int Item::getCount() {
    return this->count;
 }
 
-void Item::increaseCount()
-{
+void Item::increaseCount() {
    this->count++;
 }
 
-void Item::decreaseCount()
-{
+void Item::decreaseCount() {
    this->count--;
 }
