@@ -37,7 +37,7 @@
  * @param t2 The second Transaction to compare.
  * @return Returns true if the year of the item in t1 is less than the year of the item in t2, false otherwise.
  *
- * @pre t1 and t2 must be valid Transaction objects with non-null item pointers.
+ * @pre t1 and t2 must be valid Transaction objects with non-nullptr item pointers.
  * @post None.
  */
 bool compareTransaction(Transaction* t1, Transaction* t2)
@@ -156,7 +156,7 @@ int Inventory::readInventory(string path)
       count = atoi(stringCount.c_str());
       input.get(); 			//discard space
 
-      Item* item = NULL;
+      Item* item = nullptr;
 
       if (type == "M") // coin
       {
@@ -309,7 +309,7 @@ int Inventory::parseCommands(string path)
 
          // check if customer id exist
          Customer* customer = findCustomer(customerID);
-         if (customer == NULL)
+         if (customer == nullptr)
          {
             std::getline(input, description, '\n'); 		//get rest
             cout << "Customer: " << customerID << " not exist" << endl;
@@ -328,7 +328,7 @@ int Inventory::parseCommands(string path)
             std::getline(input, type, ','); 		//get type of inventory
             input.get(); 			//discard space 
 
-            Item* item = NULL;
+            Item* item = nullptr;
 
             if (type == "M") // coin
             {
@@ -377,11 +377,11 @@ int Inventory::parseCommands(string path)
                getline(input, description, '\n'); 	//get rest of info
             }
 
-            if (item != NULL)
+            if (item != nullptr)
             {
                Item* exist = findItem(item);
 
-               if (exist == NULL)
+               if (exist == nullptr)
                {
                   if (transactionType == 'S') // sell
                   {
@@ -390,7 +390,7 @@ int Inventory::parseCommands(string path)
                   }
                   item->setCount(1);
                   vector<Item*>* items = findItems(item->getType());
-                  if (items != NULL)
+                  if (items != nullptr)
                   {
                      items->push_back(item);
                      Transaction* trans = new Transaction(customer, item, "Buy");
@@ -451,22 +451,22 @@ int Inventory::parseCommands(string path)
  * Find a customer in the inventory by their ID.
  *
  * @param id The ID of the customer to find.
- * @return A pointer to the customer object if found, NULL otherwise.
+ * @return A pointer to the customer object if found, nullptr otherwise.
  *
  * Pre-conditions:
  * - The inventory must contain at least one customer object.
- * - The ID parameter must not be empty or null.
+ * - The ID parameter must not be empty or nullptr.
  *
  * Post-conditions:
  * - If a customer object with the given ID is found in the inventory, a pointer to that object is returned.
- * - If a customer object with the given ID is not found in the inventory, NULL is returned.
+ * - If a customer object with the given ID is not found in the inventory, nullptr is returned.
  * - The state of the inventory is not modified by this method.
  */
 Customer* Inventory::findCustomer(string id)
 {
    auto it = customers.find(id);
    if (it == customers.end())
-      return NULL;
+      return nullptr;
 
    return it->second;
 }
@@ -475,14 +475,14 @@ Customer* Inventory::findCustomer(string id)
  * Returns a pointer to a vector containing all items of the specified type.
  *
  * @param type The type of items to search for. 'M' for coins, 'C' for comics, or 'S' for sports.
- * @return Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+ * @return Returns a pointer to a vector containing all items of the specified type, or nullptr if the type is invalid.
  *
  * @pre The Inventory object must be initialized with valid data and items.
- * @post Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+ * @post Returns a pointer to a vector containing all items of the specified type, or nullptr if the type is invalid.
  */
 vector<Item*>* Inventory::findItems(char type)
 {
-   vector<Item*>* items = NULL;
+   vector<Item*>* items = nullptr;
 
    if (type == 'M') // coin
    {
@@ -506,23 +506,23 @@ vector<Item*>* Inventory::findItems(char type)
  * Finds an item in the Inventory based on its type and attributes.
  *
  * @param item A pointer to the item to find.
- * @return Returns a pointer to the item if found, or NULL if not found.
+ * @return Returns a pointer to the item if found, or nullptr if not found.
  *
  * @pre The Inventory object must be initialized with valid data and items.
  * @post None.
  *
  * This method first calls the findItems method to get a vector of items of the same type as the item to be found.
  * It then iterates through the vector to find an item that matches the given item's attributes using the compare method.
- * If found, a pointer to the matching item is returned. If not found, NULL is returned.
+ * If found, a pointer to the matching item is returned. If not found, nullptr is returned.
  */
 Item* Inventory::findItem(Item* item)
 {
-   if (item == NULL)
-      return NULL;
+   if (item == nullptr)
+      return nullptr;
 
    vector<Item*>* items = findItems(item->getType());
-   if (items == NULL)
-      return NULL;
+   if (items == nullptr)
+      return nullptr;
 
    for (auto it = items->begin(); it != items->end(); ++it)
    {
@@ -531,7 +531,7 @@ Item* Inventory::findItem(Item* item)
          return row;
    }
 
-   return NULL;
+   return nullptr;
 }
 
 

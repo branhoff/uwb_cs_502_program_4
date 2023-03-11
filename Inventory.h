@@ -104,15 +104,15 @@ public:
     * Find a customer in the inventory by their ID.
     *
     * @param id The ID of the customer to find.
-    * @return A pointer to the customer object if found, NULL otherwise.
+    * @return A pointer to the customer object if found, nullptr otherwise.
     *
     * Pre-conditions:
     * - The inventory must contain at least one customer object.
-    * - The ID parameter must not be empty or null.
+    * - The ID parameter must not be empty or nullptr.
     *
     * Post-conditions:
     * - If a customer object with the given ID is found in the inventory, a pointer to that object is returned.
-    * - If a customer object with the given ID is not found in the inventory, NULL is returned.
+    * - If a customer object with the given ID is not found in the inventory, nullptr is returned.
     * - The state of the inventory is not modified by this method.
     */
    Customer* findCustomer(string id);
@@ -121,14 +121,14 @@ public:
     * Finds an item in the Inventory based on its type and attributes.
     *
     * @param item A pointer to the item to find.
-    * @return Returns a pointer to the item if found, or NULL if not found.
+    * @return Returns a pointer to the item if found, or nullptr if not found.
     *
     * @pre The Inventory object must be initialized with valid data and items.
     * @post None.
     *
     * This method first calls the findItems method to get a vector of items of the same type as the item to be found.
     * It then iterates through the vector to find an item that matches the given item's attributes using the compare method.
-    * If found, a pointer to the matching item is returned. If not found, NULL is returned.
+    * If found, a pointer to the matching item is returned. If not found, nullptr is returned.
     */
    Item* findItem(Item* item);
 
@@ -136,10 +136,10 @@ public:
     * Returns a pointer to a vector containing all items of the specified type.
     *
     * @param type The type of items to search for. 'M' for coins, 'C' for comics, or 'S' for sports.
-    * @return Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+    * @return Returns a pointer to a vector containing all items of the specified type, or nullptr if the type is invalid.
     *
     * @pre The Inventory object must be initialized with valid data and items.
-    * @post Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+    * @post Returns a pointer to a vector containing all items of the specified type, or nullptr if the type is invalid.
     */
    vector<Item*>* findItems(char type);
 
