@@ -58,6 +58,15 @@ public:
     */
    virtual int compare(Item* other);
 
+   /**
+    * @brief Sets the count of this item to the given value.
+    *
+    * @pre count is a non-negative integer.
+    *
+    * @post The count data member of this item is set to the given value.
+    *
+    * @param count The new count value for this item.
+    */
    void setCount(int count);
 
    char type;
@@ -66,9 +75,6 @@ public:
 
 protected:
    
-   
    string grade;
-   
-
    
 };

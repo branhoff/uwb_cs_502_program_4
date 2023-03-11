@@ -46,7 +46,6 @@ std::string Item::getInfo() {
  *
  * @return -1 if this item should come before the other item in the sorting order, 1 otherwise.
  */
-
 int Item::compare(Item* other) {
    if (this->grade < other->grade) {
       return -1;
@@ -56,6 +55,15 @@ int Item::compare(Item* other) {
    }
 }
 
+/**
+ * @brief Sets the count of this item to the given value.
+ *
+ * @pre count is a non-negative integer.
+ *
+ * @post The count data member of this item is set to the given value.
+ *
+ * @param count The new count value for this item.
+ */
 void Item::setCount(int count)
 {
    this->count = count;
