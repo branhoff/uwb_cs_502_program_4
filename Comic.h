@@ -1,3 +1,19 @@
+//--------------------------------------------------------------------
+// COMIC.H
+// Declaration of the Comic class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Comic class:
+// Represents a comic item in a store inventory management system.
+// Inherits from the Item class and adds the following methods:
+// Comic - constructor that initializes the year, grade, title, and publisher of the comic item
+// getInfo - returns a string representation of the comic item, including title, year, grade, and publisher
+// compare - compares two comic items based on their sorting criteria
+// Assumptions:
+// - The year input is a positive integer
+// - The grade, title, and publisher inputs are non-empty strings
+//--------------------------------------------------------------------
+
 #pragma once
 
 #include "Item.h"

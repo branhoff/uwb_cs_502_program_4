@@ -1,3 +1,20 @@
+//--------------------------------------------------------------------
+// CUSTOMER.CPP
+// Implementation of the Customer class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Customer class:
+//   Represents a customer in the inventory management system.
+//   Contains the following methods:
+//      Customer - constructor that initializes a new customer with the given ID, first name, and last name.
+//      ~Customer - destructor that deallocates memory used by the customer
+//      getId - retrieves the ID of the customer
+//      getFirstName - retrieves the first name of the customer
+//      getLastName - retrieves the last name of the customer
+//   Assumptions:
+//      - The customer ID is unique
+//--------------------------------------------------------------------
+
 #include "Customer.h"
 
 /**

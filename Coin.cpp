@@ -1,3 +1,20 @@
+//--------------------------------------------------------------------
+// COIN.CPP
+// Implementation of the Coin class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Coin class:
+// Represents a coin item in a store inventory management system.
+// Inherits from the Item class and adds the following methods:
+// Coin - constructor that initializes the year, grade, and coin type of the coin
+// ~Coin - destructor that frees dynamically allocated memory, if any
+// getInfo - returns a string representation of the coin, including coin type, year, and grade
+// compare - compares this Coin object with another Item object based on their sorting criteria
+// Assumptions:
+// - The year input is a positive integer
+// - The grade and coin type inputs are non-empty strings
+//--------------------------------------------------------------------
+
 #include "Coin.h"
 
 /**

@@ -1,3 +1,21 @@
+//--------------------------------------------------------------------
+// ITEM.CPP
+// Implementation of the Item class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Item class:
+// Represents an item in a store inventory management system.
+// Provides the following methods:
+// Item - constructor that initializes the type, year, and grade of the item
+// getInfo - returns an empty string (to be overridden in child classes)
+// compare - compares two items based on their sorting criteria (to be overridden in child classes)
+// setCount - sets the count of the item to a given value
+// Assumptions:
+// - The type input is a valid item type, i.e. 'M' for Coins, 'C' for Comic books, 'S' for Sports cards
+// - The year input is a positive integer
+// - The grade input is a non-empty string
+//--------------------------------------------------------------------
+
 #include "Item.h"
 
 /**

@@ -1,3 +1,16 @@
+//--------------------------------------------------------------------
+// TRANSACTION.CPP
+// Implementation of the Transaction class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Transaction class:
+//   Implements a transaction object that represents a single transaction between a customer and an item
+//   using the following methods:
+//      Transaction - constructor that initializes a new transaction object
+//   Assumptions:
+//      - The pointers to customer and item passed to the constructor are valid and not null
+//--------------------------------------------------------------------
+
 #include "Transaction.h"
 
 /**

@@ -1,3 +1,27 @@
+//--------------------------------------------------------------------
+// INVENTORY.CPP
+// Implementation of the Inventory class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Inventory class:
+//   Implements an inventory management system that tracks items and transactions
+//   using the following methods:
+//      Inventory - constructor that initializes an empty inventory
+//      ~Inventory - destructor that deallocates memory used by the inventory
+//      addItem - adds an item to the inventory
+//      removeItem - removes an item from the inventory
+//      getItem - retrieves an item from the inventory by ID
+//      addTransaction - adds a transaction to the inventory
+//      displayAll - displays the inventory of items
+//      displayForCustomer - displays the transaction history for a given customer
+//   Assumptions:
+//      - The addItem method assumes that the item ID is unique
+//      - The removeItem method assumes that the item exists in the inventory
+//      - The getItem method assumes that the item exists in the inventory
+//      - The addTransaction method assumes that the customer and item exist in the inventory
+//      - The displayForCustomer method assumes that the customer exists in the inventory
+//--------------------------------------------------------------------
+
 #include <fstream>
 #include <algorithm>
 
@@ -5,6 +29,56 @@
 #include "Coin.h"
 #include "Comic.h"
 #include "Sport.h"
+
+/**
+ * Compares two Transaction objects based on the year of their items.
+ *
+ * @param t1 The first Transaction to compare.
+ * @param t2 The second Transaction to compare.
+ * @return Returns true if the year of the item in t1 is less than the year of the item in t2, false otherwise.
+ *
+ * @pre t1 and t2 must be valid Transaction objects with non-null item pointers.
+ * @post None.
+ */
+bool compareTransaction(Transaction* t1, Transaction* t2)
+{
+   return t1->item->year < t2->item->year;
+}
+
+/**
+ * Compares two Item objects based on their values and returns a boolean indicating their order.
+ *
+ * @param i1 A pointer to the first Item object to compare.
+ * @param i2 A pointer to the second Item object to compare.
+ * @return Returns true if i1 is less than i2, false otherwise.
+ *
+ * @pre The Item objects being compared must be valid and contain appropriate values.
+ * @post The Item objects are not modified by this function.
+ */
+bool compareItem(Item* i1, Item* i2)
+{
+   return i1->compare(i2) < 0;
+}
+
+/**
+ * Compares two customers based on their first and last names.
+ *
+ * @param c1 The first customer to compare.
+ * @param c2 The second customer to compare.
+ * @return Returns true if c1 should come before c2 in a sorted list, false otherwise.
+ *
+ * @pre Both c1 and c2 must be initialized with valid data.
+ * @post The order of c1 and c2 is determined based on their first and last names.
+ */
+bool compareCustomer(Customer* c1, Customer* c2)
+{
+   if (c1->firstName < c2->firstName)
+      return true;
+   if (c1->firstName > c2->firstName)
+      return false;
+
+   return c1->lastName < c2->lastName;
+}
 
 /**
  * @brief Constructs an empty Inventory object.
@@ -582,52 +656,3 @@ void Inventory::displayHistory()
    }
 }
 
-/**
- * Compares two Transaction objects based on the year of their items.
- *
- * @param t1 The first Transaction to compare.
- * @param t2 The second Transaction to compare.
- * @return Returns true if the year of the item in t1 is less than the year of the item in t2, false otherwise.
- *
- * @pre t1 and t2 must be valid Transaction objects with non-null item pointers.
- * @post None.
- */
-bool compareTransaction(Transaction* t1, Transaction* t2)
-{
-   return t1->item->year < t2->item->year;
-}
-
-/**
- * Compares two Item objects based on their values and returns a boolean indicating their order.
- *
- * @param i1 A pointer to the first Item object to compare.
- * @param i2 A pointer to the second Item object to compare.
- * @return Returns true if i1 is less than i2, false otherwise.
- *
- * @pre The Item objects being compared must be valid and contain appropriate values.
- * @post The Item objects are not modified by this function.
- */
-bool compareItem(Item* i1, Item* i2)
-{
-   return i1->compare(i2) < 0;
-}
-
-/**
- * Compares two customers based on their first and last names.
- *
- * @param c1 The first customer to compare.
- * @param c2 The second customer to compare.
- * @return Returns true if c1 should come before c2 in a sorted list, false otherwise.
- *
- * @pre Both c1 and c2 must be initialized with valid data.
- * @post The order of c1 and c2 is determined based on their first and last names.
- */
-bool compareCustomer(Customer* c1, Customer* c2)
-{
-   if (c1->firstName < c2->firstName)
-      return true;
-   if (c1->firstName > c2->firstName)
-      return false;
-
-   return c1->lastName < c2->lastName;
-}

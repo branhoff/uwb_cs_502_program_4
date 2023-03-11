@@ -1,3 +1,27 @@
+//--------------------------------------------------------------------
+// INVENTORY.H
+// Declaration of the Inventory class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Inventory class:
+//   Implements an inventory management system that tracks items and transactions
+//   using the following methods:
+//      Inventory - constructor that initializes an empty inventory
+//      ~Inventory - destructor that deallocates memory used by the inventory
+//      addItem - adds an item to the inventory
+//      removeItem - removes an item from the inventory
+//      getItem - retrieves an item from the inventory by ID
+//      addTransaction - adds a transaction to the inventory
+//      displayAll - displays the inventory of items
+//      displayForCustomer - displays the transaction history for a given customer
+//   Assumptions:
+//      - The addItem method assumes that the item ID is unique
+//      - The removeItem method assumes that the item exists in the inventory
+//      - The getItem method assumes that the item exists in the inventory
+//      - The addTransaction method assumes that the customer and item exist in the inventory
+//      - The displayForCustomer method assumes that the customer exists in the inventory
+//--------------------------------------------------------------------
+
 #pragma once
 
 #include <vector>

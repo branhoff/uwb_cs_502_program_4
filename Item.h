@@ -1,14 +1,22 @@
-#pragma once
-
-// Item class:
-//   Represents a collectible item, with data members for type, year, and grade.
-//   Includes the following methods:
-//      Item - constructor that initializes the data members
-//      getInfo - virtual function to get information about the item
-//   Assumptions:
-//      - The input to the constructor should be valid, with a valid item type, a positive year, and a non-empty grade string.
-//      - The virtual function getInfo will be overridden in the derived classes (Coin, Comic, SportsCard).
 //--------------------------------------------------------------------
+// ITEM.H
+// Declaration of the Item class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Item class:
+// Represents an item in a store inventory management system.
+// Provides the following methods:
+// Item - constructor that initializes the type, year, and grade of the item
+// getInfo - returns an empty string (to be overridden in child classes)
+// compare - compares two items based on their sorting criteria (to be overridden in child classes)
+// setCount - sets the count of the item to a given value
+// Assumptions:
+// - The type input is a valid item type, i.e. 'M' for Coins, 'C' for Comic books, 'S' for Sports cards
+// - The year input is a positive integer
+// - The grade input is a non-empty string
+//--------------------------------------------------------------------
+
+#pragma once
 
 #include <iostream>
 #include <string>

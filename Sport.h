@@ -1,3 +1,19 @@
+//--------------------------------------------------------------------
+// SPORT.H
+// Declaration of the Sport class
+// Author: Brandon Hoffman
+//--------------------------------------------------------------------
+// Sport class:
+//   Represents a sport item in a store inventory management system.
+//   Inherits from the Item class and adds the following methods:
+//      Sport - constructor that initializes the year, grade, player, and manufacturer of the sport item
+//      getInfo - returns a string representation of the sport item, including player name, year, grade, and manufacturer
+//      compare - compares two sport items based on their sorting criteria
+//   Assumptions:
+//      - The year input is a positive integer
+//      - The grade, player, and manufacturer inputs are non-empty strings
+//--------------------------------------------------------------------
+
 #pragma once
 #include "Item.h"
 class Sport :    public Item
