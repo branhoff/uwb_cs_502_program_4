@@ -6,11 +6,26 @@
 #include "Comic.h"
 #include "Sport.h"
 
+/**
+ * @brief Constructs an empty Inventory object.
+ *
+ * @pre None.
+ * @post An empty Inventory object is created.
+ */
 Inventory::Inventory()
 {
 
 }
 
+/**
+ * @brief Destructor for the Inventory class.
+ *
+ * Pre-condition: An Inventory object has been instantiated.
+ *
+ * Post-condition: All dynamically allocated memory for Coin, Comic, Sport, Customer, and Transaction objects
+ * has been freed, and the Inventory object has been destroyed.
+ *
+ */
 Inventory::~Inventory()
 {
    for (auto it = coins.begin(); it != coins.end(); ++it)
@@ -40,6 +55,15 @@ Inventory::~Inventory()
    }
 }
 
+/**
+ * Read inventory from a given file path.
+ *
+ * @param path The path to the input file.
+ * @return Returns 0 on success, -1 on error.
+ *
+ * @pre The input file at the given path exists.
+ * @post The items in the input file have been added to the inventory.
+ */
 int Inventory::readInventory(string path)
 {
    ifstream input(path);
@@ -125,6 +149,19 @@ int Inventory::readInventory(string path)
    return 0;
 }
 
+/**
+ * Reads customer information from a given file and adds them to the inventory.
+ *
+ * @param path The path of the file to read from.
+ * @return 0 if the file was successfully read and customer information was added to the inventory, -1 if the file could not be opened.
+ *
+ * Pre-conditions:
+ * - `path` is a valid file path to an existing file that can be read from.
+ *
+ * Post-conditions:
+ * - If the file at `path` was successfully read, `customers` vector contains new Customer objects with information from the file.
+ * - If the file could not be opened, an error message is printed to the console and the function returns -1.
+ */
 int Inventory::readCustomer(string path)
 {
    ifstream input(path);
@@ -151,7 +188,19 @@ int Inventory::readCustomer(string path)
 
    return 0;
 }
-
+/**
+ * Parses commands from a file and executes them on the Inventory object.
+ *
+ * @param path The path to the file containing the commands.
+ * @return Returns 0 on success, -1 if the file does not exist or could not be opened.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @pre The file at the specified path must exist and be readable.
+ * @post The Inventory object is modified according to the commands in the file.
+ * @post Transactions are added to the Inventory's transaction history.
+ * @post Items are added or removed from the Inventory's items.
+ * @post Customers may be added to the Inventory's customers if they are referenced in the file.
+ */
 int Inventory::parseCommands(string path)
 {
    ifstream input(path);
@@ -328,6 +377,21 @@ int Inventory::parseCommands(string path)
    return 0;
 }
 
+/**
+ * Find a customer in the inventory by their ID.
+ *
+ * @param id The ID of the customer to find.
+ * @return A pointer to the customer object if found, NULL otherwise.
+ *
+ * Pre-conditions:
+ * - The inventory must contain at least one customer object.
+ * - The ID parameter must not be empty or null.
+ *
+ * Post-conditions:
+ * - If a customer object with the given ID is found in the inventory, a pointer to that object is returned.
+ * - If a customer object with the given ID is not found in the inventory, NULL is returned.
+ * - The state of the inventory is not modified by this method.
+ */
 Customer* Inventory::findCustomer(string id)
 {
    for (auto it = customers.begin(); it != customers.end(); ++it)
@@ -340,6 +404,15 @@ Customer* Inventory::findCustomer(string id)
    return NULL;
 }
 
+/**
+ * Returns a pointer to a vector containing all items of the specified type.
+ *
+ * @param type The type of items to search for. 'M' for coins, 'C' for comics, or 'S' for sports.
+ * @return Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @post Returns a pointer to a vector containing all items of the specified type, or NULL if the type is invalid.
+ */
 vector<Item*>* Inventory::findItems(char type)
 {
    vector<Item*>* items = NULL;
@@ -362,6 +435,19 @@ vector<Item*>* Inventory::findItems(char type)
    return items;
 }
 
+/**
+ * Finds an item in the Inventory based on its type and attributes.
+ *
+ * @param item A pointer to the item to find.
+ * @return Returns a pointer to the item if found, or NULL if not found.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @post None.
+ *
+ * This method first calls the findItems method to get a vector of items of the same type as the item to be found.
+ * It then iterates through the vector to find an item that matches the given item's attributes using the compare method.
+ * If found, a pointer to the matching item is returned. If not found, NULL is returned.
+ */
 Item* Inventory::findItem(Item* item)
 {
    if (item == NULL)
@@ -381,11 +467,19 @@ Item* Inventory::findItem(Item* item)
    return NULL;
 }
 
-bool compareTransaction(Transaction* t1, Transaction* t2)
-{
-   return t1->item->year < t2->item->year;
-}
 
+/**
+ * Displays the transaction history for a specific customer in the inventory,
+ * sorted chronologically by transaction date.
+ *
+ * @param id The ID of the customer whose transaction history is to be displayed.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @post The transaction history for the specified customer is printed to the console,
+ *       sorted chronologically by transaction date.
+ *       If there are no transactions for the specified customer, a message is printed
+ *       indicating that there are no transactions.
+ */
 void Inventory::displayForCustomer(string id)
 {
    cout << endl << "-------- Transaction of Customer " << id << " ---------- - " << endl;
@@ -417,11 +511,13 @@ void Inventory::displayForCustomer(string id)
 
 }
 
-bool compareItem(Item* i1, Item* i2)
-{
-   return i1->compare(i2) < 0;
-}
 
+/**
+ * Displays the current inventory of items in the console.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @post The current inventory of items is displayed in the console.
+ */
 void Inventory::displayInventory()
 {
    cout << endl << "-------- Inventory -----------" << endl;
@@ -464,15 +560,14 @@ void Inventory::displayInventory()
    cout << endl;
 }
 
-bool compareCustomer(Customer* c1, Customer* c2)
-{
-   if (c1->firstName < c2->firstName)
-      return true;
-   if (c1->firstName > c2->firstName)
-      return false;
-
-   return c1->lastName < c2->lastName;
-}
+/**
+ * Displays the transaction history of all customers in the inventory,
+ * sorted alphabetically by customer name and then chronologically by transaction date.
+ *
+ * @pre The Inventory object must be initialized with valid data and items.
+ * @post The transaction history of all customers in the inventory is printed to the console.
+ *       Transactions are sorted by customer name and then by transaction date.
+ */
 void Inventory::displayHistory()
 {
    cout << endl << "-------- History -----------" << endl;
@@ -485,4 +580,54 @@ void Inventory::displayHistory()
       Customer* customer = *it;
       displayForCustomer(customer->id);
    }
+}
+
+/**
+ * Compares two Transaction objects based on the year of their items.
+ *
+ * @param t1 The first Transaction to compare.
+ * @param t2 The second Transaction to compare.
+ * @return Returns true if the year of the item in t1 is less than the year of the item in t2, false otherwise.
+ *
+ * @pre t1 and t2 must be valid Transaction objects with non-null item pointers.
+ * @post None.
+ */
+bool compareTransaction(Transaction* t1, Transaction* t2)
+{
+   return t1->item->year < t2->item->year;
+}
+
+/**
+ * Compares two Item objects based on their values and returns a boolean indicating their order.
+ *
+ * @param i1 A pointer to the first Item object to compare.
+ * @param i2 A pointer to the second Item object to compare.
+ * @return Returns true if i1 is less than i2, false otherwise.
+ *
+ * @pre The Item objects being compared must be valid and contain appropriate values.
+ * @post The Item objects are not modified by this function.
+ */
+bool compareItem(Item* i1, Item* i2)
+{
+   return i1->compare(i2) < 0;
+}
+
+/**
+ * Compares two customers based on their first and last names.
+ *
+ * @param c1 The first customer to compare.
+ * @param c2 The second customer to compare.
+ * @return Returns true if c1 should come before c2 in a sorted list, false otherwise.
+ *
+ * @pre Both c1 and c2 must be initialized with valid data.
+ * @post The order of c1 and c2 is determined based on their first and last names.
+ */
+bool compareCustomer(Customer* c1, Customer* c2)
+{
+   if (c1->firstName < c2->firstName)
+      return true;
+   if (c1->firstName > c2->firstName)
+      return false;
+
+   return c1->lastName < c2->lastName;
 }
