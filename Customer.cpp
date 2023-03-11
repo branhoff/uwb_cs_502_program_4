@@ -36,3 +36,13 @@ Customer::Customer(string id, string fname, string lname)
    this->firstName = fname;
    this->lastName = lname;
 }
+
+string Customer::getId()
+{
+   return this->id;
+}
+
+string Customer::getFullName()
+{
+   return this->firstName + " " + this->lastName;
+}

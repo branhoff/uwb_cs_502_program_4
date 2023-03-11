@@ -77,12 +77,18 @@ public:
     */
    void setCount(int count);
 
+   int getCount();
+   void increaseCount();
+   void decreaseCount();
+
+   char getType();
+   int  getYear();
+
+
+
+protected:
    char type;
    int count;
    int year;
-
-protected:
-   
    string grade;
-   
 };

@@ -42,7 +42,7 @@
  */
 bool compareTransaction(Transaction* t1, Transaction* t2)
 {
-   return t1->item->year < t2->item->year;
+   return t1->item->getYear() < t2->item->getYear();
 }
 
 /**
@@ -72,12 +72,7 @@ bool compareItem(Item* i1, Item* i2)
  */
 bool compareCustomer(Customer* c1, Customer* c2)
 {
-   if (c1->firstName < c2->firstName)
-      return true;
-   if (c1->firstName > c2->firstName)
-      return false;
-
-   return c1->lastName < c2->lastName;
+   return c1->getFullName() < c2->getFullName();
 }
 
 /**
@@ -120,7 +115,8 @@ Inventory::~Inventory()
 
    for (auto it = customers.begin(); it != customers.end(); ++it)
    {
-      delete (*it);
+      Customer* customer = it->second;
+      delete customer;
    }
 
    for (auto it = transactions.begin(); it != transactions.end(); ++it)
@@ -151,7 +147,7 @@ int Inventory::readInventory(string path)
    string type, stringCount, stringYear, grade, description;
    string coinType, title, publisher, player, manufacturer;
    int count = 0, year = 0;
-   
+
    while (!input.eof())
    {
       std::getline(input, type, ','); 		//get type of inventory
@@ -247,7 +243,7 @@ int Inventory::readCustomer(string path)
    }
 
    string id, firstName, lastName;
-   
+
    while (!input.eof())
    {
       std::getline(input, id, ','); 		//get id
@@ -257,7 +253,7 @@ int Inventory::readCustomer(string path)
       std::getline(input, lastName, '\n'); 		//get rest    
 
       Customer* customer = new Customer(id, firstName, lastName);
-      customers.push_back(customer);
+      customers.insert({ id, customer });
    }
 
    return 0;
@@ -310,7 +306,7 @@ int Inventory::parseCommands(string path)
          {
             std::getline(input, customerID, ',');
          }
-         
+
          // check if customer id exist
          Customer* customer = findCustomer(customerID);
          if (customer == NULL)
@@ -331,7 +327,7 @@ int Inventory::parseCommands(string path)
 
             std::getline(input, type, ','); 		//get type of inventory
             input.get(); 			//discard space 
-            
+
             Item* item = NULL;
 
             if (type == "M") // coin
@@ -384,7 +380,7 @@ int Inventory::parseCommands(string path)
             if (item != NULL)
             {
                Item* exist = findItem(item);
-               
+
                if (exist == NULL)
                {
                   if (transactionType == 'S') // sell
@@ -393,7 +389,7 @@ int Inventory::parseCommands(string path)
                      delete item;
                   }
                   item->setCount(1);
-                  vector<Item*>* items = findItems(item->type);
+                  vector<Item*>* items = findItems(item->getType());
                   if (items != NULL)
                   {
                      items->push_back(item);
@@ -405,20 +401,20 @@ int Inventory::parseCommands(string path)
                {
                   if (transactionType == 'S')
                   {
-                     if (exist->count < 1)
+                     if (exist->getCount() < 1)
                      {
                         cout << "there is no inventory for item " << item->getInfo() << endl;
                      }
                      else
                      {
-                        exist->count--;
+                        exist->decreaseCount();
                         Transaction* trans = new Transaction(customer, exist, "Sell");
                         transactions.push_back(trans);
                      }
                   }
                   else // Buy
                   {
-                     exist->count++;
+                     exist->increaseCount();
 
                      Transaction* trans = new Transaction(customer, exist, "Buy");
                      transactions.push_back(trans);
@@ -468,14 +464,11 @@ int Inventory::parseCommands(string path)
  */
 Customer* Inventory::findCustomer(string id)
 {
-   for (auto it = customers.begin(); it != customers.end(); ++it)
-   {
-      Customer* customer = *it;
-      if (customer->id == id)
-         return customer;
-   }
+   auto it = customers.find(id);
+   if (it == customers.end())
+      return NULL;
 
-   return NULL;
+   return it->second;
 }
 
 /**
@@ -527,7 +520,7 @@ Item* Inventory::findItem(Item* item)
    if (item == NULL)
       return NULL;
 
-   vector<Item*>* items = findItems(item->type);
+   vector<Item*>* items = findItems(item->getType());
    if (items == NULL)
       return NULL;
 
@@ -561,7 +554,7 @@ void Inventory::displayForCustomer(string id)
    for (auto it = transactions.begin(); it != transactions.end(); ++it)
    {
       Transaction* trans = *it;
-      if (trans->customer->id != id)
+      if (trans->customer->getId() != id)
          continue;
       transForCustomer.push_back(trans);
    }
@@ -573,7 +566,7 @@ void Inventory::displayForCustomer(string id)
    for (auto it = transForCustomer.begin(); it != transForCustomer.end(); ++it)
    {
       Transaction* trans = *it;
-      cout << "Customer " << trans->customer->firstName << " " << trans->customer->lastName << " " << trans->type << ": " << trans->item->getInfo() << endl;
+      cout << "Customer " << trans->customer->getFullName() << " " << trans->type << ": " << trans->item->getInfo() << endl;
    }
 
    if (transForCustomer.size() < 1)
@@ -602,10 +595,11 @@ void Inventory::displayInventory()
    {
       Item* item = *it;
 
-      if (item->count < 1)
+      int count = item->getCount();
+      if (count < 1)
          continue;
 
-        cout << item->getInfo() << ", Count = " << item->count << endl;
+      cout << item->getInfo() << ", Count = " << count << endl;
    }
 
    cout << endl << "----- Comics List -----" << endl;
@@ -614,10 +608,12 @@ void Inventory::displayInventory()
    {
       Item* item = *it;
 
-      if (item->count < 1)
+      int count = item->getCount();
+
+      if (count < 1)
          continue;
 
-      cout << item->getInfo() << ", Count = " << item->count << endl;
+      cout << item->getInfo() << ", Count = " << count << endl;
    }
 
    cout << endl << "----- Sports List -----" << endl;
@@ -626,10 +622,11 @@ void Inventory::displayInventory()
    {
       Item* item = *it;
 
-      if (item->count < 1)
+      int count = item->getCount();
+      if (count < 1)
          continue;
 
-      cout << item->getInfo() << ", Count = " << item->count << endl;
+      cout << item->getInfo() << ", Count = " << count << endl;
    }
    cout << endl;
 }
@@ -647,12 +644,19 @@ void Inventory::displayHistory()
    cout << endl << "-------- History -----------" << endl;
 
    // sort customer first
-   std::sort(customers.begin(), customers.end(), compareCustomer);
-
+   vector<Customer*> sorted;
    for (auto it = customers.begin(); it != customers.end(); ++it)
    {
+      Customer* customer = it->second;
+      sorted.push_back(customer);
+   }
+
+   std::sort(sorted.begin(), sorted.end(), compareCustomer);
+
+   for (auto it = sorted.begin(); it != sorted.end(); ++it)
+   {
       Customer* customer = *it;
-      displayForCustomer(customer->id);
+      displayForCustomer(customer->getId());
    }
 }
 

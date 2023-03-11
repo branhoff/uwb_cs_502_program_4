@@ -15,8 +15,10 @@
 //--------------------------------------------------------------------
 
 #pragma once
+
 #include "Item.h"
-class Sport :    public Item
+
+class Sport : public Item
 {
 public:
    /**

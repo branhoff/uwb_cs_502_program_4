@@ -81,6 +81,6 @@ int Coin::compare(Item* other) {
       return -1;
    if (grade > otherCoin->grade)
       return 1;
-   
+
    return 0;
 }

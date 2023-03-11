@@ -31,7 +31,7 @@
  *
  * @post The type, year, grade, and count data members are initialized with the input values.
  */
-Item::Item(char type, int year, string grade) {   
+Item::Item(char type, int year, string grade) {
    this->type = type;
    this->year = year;
    this->grade = grade;
@@ -85,4 +85,29 @@ int Item::compare(Item* other) {
 void Item::setCount(int count)
 {
    this->count = count;
+}
+
+char Item::getType()
+{
+   return this->type;
+}
+
+int Item::getYear()
+{
+   return this->year;
+}
+
+int Item::getCount()
+{
+   return this->count;
+}
+
+void Item::increaseCount()
+{
+   this->count++;
+}
+
+void Item::decreaseCount()
+{
+   this->count--;
 }

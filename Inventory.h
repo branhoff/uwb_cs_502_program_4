@@ -25,6 +25,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "Item.h"
 #include "Customer.h"
 #include "Transaction.h"
@@ -35,9 +36,9 @@ private:
    vector<Item*> coins;
    vector<Item*> comics;
    vector<Item*> sports;
-   vector<Customer*> customers;
+   map<string, Customer*> customers;
    vector<Transaction*> transactions;
-   
+
 public:
    /**
     * @brief Constructs an empty Inventory object.
@@ -176,6 +177,6 @@ public:
 
 public:
 
-   
+
 };
 

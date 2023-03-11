@@ -48,7 +48,7 @@ public:
     * @return A string representation of the coin, including its coin type, year, and grade.
     */
    std::string getInfo() override;
-   
+
    /**
     * @brief Compares this Coin object with another Item object based on their sorting criteria.
     *

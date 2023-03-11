@@ -27,7 +27,7 @@
  */
 class Transaction
 {
-   
+
 public:
    Transaction(Customer* customer, Item* item, string type);
 

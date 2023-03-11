@@ -16,6 +16,7 @@
 //--------------------------------------------------------------------
 
 #pragma once
+
 #include <iostream>
 
 using namespace std;
@@ -23,7 +24,10 @@ using namespace std;
 class Customer
 {
 private:
-   
+   string id;
+   string firstName;
+   string lastName;
+
 public:
    /**
     * @brief Creates a new Customer object with the given ID, first name, and last name.
@@ -40,9 +44,7 @@ public:
     */
    Customer(string id, string fname, string lname);
 
-   string id;
-   string firstName;
-   string lastName;
-   
+   string getId();
+   string getFullName();
 };
 

@@ -66,7 +66,7 @@ int Comic::compare(Item* other) {
       return -1;
    }
 
-   if (publisher < otherComic->publisher) 
+   if (publisher < otherComic->publisher)
       return -1;
    if (publisher > otherComic->publisher)
       return 1;
