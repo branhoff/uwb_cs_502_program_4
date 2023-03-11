@@ -96,3 +96,8 @@ With the above syntax, the third parameter is a delimiter. You will only get cha
 
 	invStream.ignore();	        //throw away a character
 	invStream.ignore(n, delimiter);	//throw away n chars, unless delimiter found
+
+
+## Hash tables
+
+You are required to use at least one hash table in your program (we'll cover these soon). There are actually several places where they could be used. If you want to get started designing with them, the important aspect of hash tables is that they are used for fast lookup of items. For example, if each item can be mapped into a unique number, you can use an array to store the items according to their unique number and look them up in O(1) time. Hash tables usually waste some memory, since not all of the array will be filled. However, the waste is not too bad, if you store pointers to items, rather than the items themselves. It is generally better to use a hash table than a switch statement (or if-then-else-if) when there are several cases that must be tested to determine which function to call. (If you aren't using a factory with hashed dummy objects in your design, then your design could be improved.) Note: your implementation will implement any hash tables from scratch (do not use STL, except perhaps a vector for this).

@@ -2,36 +2,41 @@
 //
 
 #include <iostream>
-#include "Coin.h"
+#include <fstream>
+
+#include "Inventory.h"
 
 int main() {
-   const int numCoins = 3;
-   Coin coins[numCoins] = {
-       Coin(1909, 65, "Lincoln Cent"),
-       Coin(1932, 68, "Washington Quarter"),
-       Coin(1889, 60, "Morgan Dollar")
-   };
+   Inventory inventory;
+   inventory.readInventory("hw4inventory.txt");
+   inventory.readCustomer("hw4customers.txt");
+   inventory.parseCommands("hw4commands.txt");
+   //Coin coins[numCoins] = {
+   //    Coin(1909, 65, "Lincoln Cent"),
+   //    Coin(1932, 68, "Washington Quarter"),
+   //    Coin(1889, 60, "Morgan Dollar")
+   //};
 
-   for (int i = 0; i < numCoins; i++) {
-      std::cout << coins[i].getInfo() << std::endl;
-   }
+   //for (int i = 0; i < numCoins; i++) {
+   //   std::cout << coins[i].getInfo() << std::endl;
+   //}
 
-   Coin::sort(coins, numCoins);
+   //Coin::sort(coins, numCoins);
 
-   for (int i = 0; i < numCoins; i++) {
-      std::cout << coins[i].getInfo() << std::endl;
-   }
+   //for (int i = 0; i < numCoins; i++) {
+   //   std::cout << coins[i].getInfo() << std::endl;
+   //}
+
+
+   //std::string inventoryFile = "hw4inventory.txt";
+   //std::ifstream input(inventoryFile);
+
+   //while (invStream.peek() != EOF) {
+   //   string fileInput;
+   //   getline(inventoryStream, fileInput);
+   //   // Do something to parse the line of input here
+   //}
+
 
    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

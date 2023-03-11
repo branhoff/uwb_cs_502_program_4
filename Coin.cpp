@@ -1,39 +1,32 @@
 #include "Coin.h"
 
-Coin::Coin(int year, int grade, std::string coinType) : Item('M', year, grade), coinType(coinType) {}
+Coin::Coin(int year, string grade, std::string coinType) : Item('M', year, grade), coinType(coinType) {}
 
 Coin::~Coin() {}
 
 std::string Coin::getInfo() {
-   return "Coin: " + coinType + " (" + std::to_string(year) + "), Grade: " + std::to_string(grade);
+   return "Coin: " + coinType + " (" + std::to_string(year) + "), Grade: " + grade;
 }
 
-bool Coin::compare(Item* other) {
+int Coin::compare(Item* other) {
    Coin* otherCoin = dynamic_cast<Coin*>(other);
-   if (otherCoin == nullptr || coinType < otherCoin->coinType) {
-      return true;
-   }
-   if (coinType == otherCoin->coinType) {
-      if (year < otherCoin->year) {
-         return true;
-      }
-      if (year == otherCoin->year) {
-         if (grade < otherCoin->grade) {
-            return true;
-         }
-      }
-   }
-   return false;
-}
+   if (otherCoin == nullptr)
+      return -1;
 
-void Coin::sort(Coin* coins, int numCoins) {
-   for (int i = 0; i < numCoins - 1; i++) {
-      for (int j = i + 1; j < numCoins; j++) {
-         if (coins[i].compare(&coins[j])) {
-            Coin temp = coins[i];
-            coins[i] = coins[j];
-            coins[j] = temp;
-         }
-      }
-   }
+   if (coinType < otherCoin->coinType)
+      return -1;
+   if (coinType > otherCoin->coinType)
+      return 1;
+
+   if (year < otherCoin->year)
+      return -1;
+   if (year > otherCoin->year)
+      return 1;
+
+   if (grade < otherCoin->grade)
+      return -1;
+   if (grade > otherCoin->grade)
+      return 1;
+   
+   return 0;
 }
